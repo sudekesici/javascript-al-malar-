@@ -295,24 +295,53 @@
 // })
 
 // console.log(promise)
-let check = true;
-const newPromise = () => {
-    return promise1 = new Promise ((resolve, reject) => {
-        if (check) {
-            resolve("Promise başarılı çalışıyor.")
-        }else {
-            reject("Promise başarısız")
-        }
-    })
+
+// promise örnek
+// let check = true;
+// const newPromise = () => {
+//     return new Promise ((resolve, reject) => {
+//         if (check) {
+//             resolve("Promise başarılı çalışıyor.")
+//         }else {
+//             reject("Promise başarısız")
+//         }
+//     })
+// }
+
+// newPromise()
+// .then((response) => {
+//     console.log(response)
+
+// })
+// .catch((error) => {
+//     console.log(error)
+// })
+// .finally(() => {
+//     console.log("Her zaman çalışır.")
+// })
+
+// promise ve xmlhttprequest
+
+const readStudents=(url) => {
+ return new Promise((resolve,reject) => {
+
+    const xhr = new XMLHttpRequest();
+    try{
+        xhr.addEventListener("readystatechange", ()=> {
+            if(xhr.readyState === 4 && xhr.status === 200) {
+                resolve(JSON.parse(xhr.responseText))
+            }
+        })
+    } catch (error) {
+        reject(error);
+    }
+
+    xhr.open("GET", url);
+    xhr.send();
+ })
 }
 
-newPromise()
-.then((response) => {
-    console.log(response)
-})
-.catch((error) => {
-    console.log(error)
-})
-.finally(() => {
-    console.log("Her zaman çalışır.")
-})
+readStudents("students.json")
+.then((data) => console.log(data))
+.catch((err)=>console.log(err))
+
